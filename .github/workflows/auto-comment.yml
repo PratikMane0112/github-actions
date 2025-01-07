@@ -10,6 +10,10 @@ on:
       - opened
       - closed
 
+permissions:
+  issues: write
+  pull-requests: write
+
 jobs:
   respond-to-events:
     runs-on: ubuntu-latest
