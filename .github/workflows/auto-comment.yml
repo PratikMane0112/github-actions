@@ -5,7 +5,7 @@ on:
     types:
       - opened
       - closed
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - closed
@@ -13,6 +13,7 @@ on:
 permissions:
   issues: write
   pull-requests: write
+  contents: write
 
 jobs:
   respond-to-events:
@@ -22,6 +23,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Debug Event Data (Optional for troubleshooting)
+      - name: Debug Event Data
+        run: echo "${{ toJSON(github.event) }}"
+
       # Respond to new issues
       - name: Respond to new issues
         if: ${{ github.event.action == 'opened' && github.event_name == 'issues' }}
@@ -30,7 +35,7 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Hey @${{ github.actor }}, Welcome to 💖TelMedSphere !!! 🎊
-            Thanks for opening an issue! 🙌 Please wait for the issue to get reviewed, if it is relevant then it will get assigned to you.
+            Thanks for opening an issue! 🙌 Please wait for the issue to get reviewed. If it is relevant, it will get assigned to you.
             Happy Coding !!! ✨
 
       # Respond to closed issues
@@ -41,7 +46,7 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Hello @${{ github.event.issue.user.login }}! Your issue #${{ github.event.issue.number }} has been closed.
-            Thank you for interest in 💖TelMedSphere !!! 🙌
+            Thank you for your interest in 💖TelMedSphere !!! 🙌
 
       # Respond to new PRs
       - name: Respond to new PRs
