@@ -23,10 +23,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Debug Event Data (Optional for troubleshooting)
-      - name: Debug Event Data
-        run: echo "${{ toJSON(github.event) }}"
-
       # Respond to new issues
       - name: Respond to new issues
         if: ${{ github.event.action == 'opened' && github.event_name == 'issues' }}
