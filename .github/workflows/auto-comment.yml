@@ -29,9 +29,9 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Hey @${{ github.actor }}, Welcome to 💖TelMedSphere! 🎊
-            Thanks for opening an issue! 🙌 Please wait for the issue to be assigned.
-            Happy Coding!! ✨
+            Hey @${{ github.actor }}, Welcome to 💖TelMedSphere !!! 🎊
+            Thanks for opening an issue! 🙌 Please wait for the issue to get reviewed, if it is relevant then it will get assigned to you.
+            Happy Coding !!! ✨
 
       # Respond to closed issues
       - name: Respond to closed issues
@@ -41,7 +41,7 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Hello @${{ github.event.issue.user.login }}! Your issue #${{ github.event.issue.number }} has been closed.
-            Thank you for your contribution to 💖TelMedSphere!!! 🙌
+            Thank you for interest in 💖TelMedSphere !!! 🙌
 
       # Respond to new PRs
       - name: Respond to new PRs
@@ -50,8 +50,8 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            Hey @${{ github.actor }}, Welcome to 💖TelMedSphere 🎊
-            Thanks for your contribution! Your effort makes this project better. Keep it up! 🙌
+            Hey @${{ github.actor }}, Welcome to 💖TelMedSphere !!! 🎊
+            Thanks for raising a PR! Your effort makes this project better. 🙌
             Please wait for the PR to be reviewed.
             Happy Coding!! ✨
 
@@ -63,5 +63,16 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             @${{ github.event.pull_request.user.login }} Congrats, Your pull request has been successfully merged 🥳🎉
-            Thank you for your contribution to 💖TelMedSphere!!
+            Thank you for your contribution to 💖TelMedSphere !!!
             Happy coding 🎊, Keep Contributing 🙌 !!!
+
+      # Respond to closed PRs (not merged)
+      - name: Respond to closed PRs (not merged)
+        if: ${{ github.event.action == 'closed' && github.event.pull_request.merged == false }}
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Hello @${{ github.event.pull_request.user.login }}, your PR #${{ github.event.pull_request.number }} has been closed without merging. 😞
+            Don't be discouraged! Please feel free to address any review comments or reopen the PR if necessary.
+            Thank you for your effort and interest in 💖TelMedSphere !!! 🙌
